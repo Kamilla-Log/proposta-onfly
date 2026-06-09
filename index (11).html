@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Onfly – Cartões de Viagem</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --purple:       #5B2EE0;
+    --purple-light: #7B4FF0;
+    --purple-pale:  #F0ECFD;
+    --purple-soft:  #DDD4FA;
+    --red:          #DC3545;
+    --red-pale:     #FFF0F1;
+    --green:        #0BAF6A;
+    --green-pale:   #E8F9F2;
+    --amber:        #B97A00;
+    --amber-pale:   #FFF8E6;
+    --bg:           #F4F2FA;
+    --white:        #FFFFFF;
+    --border:       #E4DEFA;
+    --text:         #18113A;
+    --text-2:       #3D3260;
+    --muted:        #7467A0;
+    --muted-2:      #A89EC8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    padding: 48px 32px 80px;
+    line-height: 1.5;
+  }
+
+  .doc { max-width: 920px; margin: 0 auto; }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #5B2EE0 0%, #7B4FF0 60%, #9B6FF8 100%);
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-bottom: 36px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(91,46,224,0.28);
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: 80px;
+    width: 140px; height: 140px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .header .tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .header h1 span {
+    background: rgba(255,255,255,0.18);
+    padding: 2px 10px;
+    border-radius: 6px;
+  }
+  .header .sub {
+    color: rgba(255,255,255,0.65);
+    font-size: 12.5px;
+    font-weight: 400;
+    position: relative;
+  }
+  .header .sub strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+
+  /* ── SECTION TITLE ── */
+  .stitle {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .stitle::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── PAIN GRID ── */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .pain-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid var(--red-pale);
+    box-shadow: 0 2px 8px rgba(220,53,69,0.06);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .pain-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(220,53,69,0.1); }
+  .pain-card .pi {
+    width: 36px; height: 36px;
+    background: var(--red-pale);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    margin-bottom: 12px;
+  }
+  .pain-card .pd { font-size:11.5px; color: var(--muted); line-height: 1.5; margin-top: 6px; }
+  .pain-card .pl {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .pain-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ── COMPARISON ── */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .col-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(91,46,224,0.05);
+  }
+  .col-card.current { border-top: 4px solid var(--red); }
+  .col-card.future  { border-top: 4px solid var(--green); }
+  .col-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .col-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .current .col-dot { background: var(--red); }
+  .future  .col-dot { background: var(--green); }
+  .col-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+  .col-card.current .col-title { color: var(--red); }
+  .col-card.future  .col-title { color: var(--green); }
+
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .step-list li {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 10px 12px;
+    border-radius: 9px;
+    background: var(--bg);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .step-num-badge {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .current .step-num-badge { background: var(--red-pale); color: var(--red); }
+  .future  .step-num-badge { background: var(--green-pale); color: var(--green); }
+  .step-list li strong { color: var(--text); display: block; font-size: 11.5px; margin-bottom: 1px; font-weight: 600; }
+
+  /* ── GAIN GRID ── */
+  .gain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .gain-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    border: 1px solid var(--green-pale);
+    box-shadow: 0 2px 8px rgba(11,175,106,0.05);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .gain-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(11,175,106,0.10); }
+  .gain-icon {
+    width: 38px; height: 38px;
+    background: var(--green-pale);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .gain-card h4 { font-size: 12.5px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .gain-card p  { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ── COST BOX ── */
+  .cost-box {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 40px;
+    border: 1px solid #F0E4BB;
+    box-shadow: 0 2px 12px rgba(185,122,0,0.07);
+  }
+  .cost-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .cost-header .ci {
+    width: 36px; height: 36px;
+    background: var(--amber-pale);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+  .cost-header h3 { font-size: 13px; font-weight: 700; color: var(--amber); }
+  .cost-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .cost-item {
+    background: var(--amber-pale);
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+  }
+  .cost-item .cv {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--amber);
+    margin-bottom: 5px;
+  }
+  .cost-item .cl { font-size: 11px; color: #9A6E10; line-height: 1.45; }
+  .cost-obs {
+    background: var(--amber-pale);
+    border-left: 3px solid #D4A020;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #7A5210;
+    line-height: 1.65;
+  }
+
+  /* ── IMPL STEPS ── */
+  .impl-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .impl-steps::before {
+    content: '';
+    position: absolute;
+    left: 20px; top: 40px; bottom: 40px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--purple), var(--purple-soft));
+    border-radius: 2px;
+  }
+  .impl-row {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 8px 0;
+    position: relative;
+  }
+  .impl-num {
+    width: 40px; height: 40px;
+    background: var(--white);
+    border: 2px solid var(--purple-soft);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--purple);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 8px rgba(91,46,224,0.1);
+  }
+  .impl-row.done .impl-num {
+    background: var(--purple);
+    color: #fff;
+    border-color: var(--purple);
+    box-shadow: 0 4px 12px rgba(91,46,224,0.3);
+  }
+  .impl-content {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    flex: 1;
+    box-shadow: 0 1px 6px rgba(91,46,224,0.04);
+  }
+  .impl-content h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .impl-content p  { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  .badge.pending { background: var(--amber-pale); color: var(--amber); }
+  .badge.done    { background: var(--green-pale);  color: var(--green); }
+  .badge.action  { background: var(--purple-pale); color: var(--purple); }
+
+  /* ── METRICS ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .metric-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 22px 14px;
+    text-align: center;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(91,46,224,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--purple), var(--purple-light));
+  }
+  .metric-card .val {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--purple);
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+  .metric-card .lbl { font-size: 11px; color: var(--muted); line-height: 1.45; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--muted-2);
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .footer strong { color: var(--purple); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="tag">Proposta de Melhoria · Contas a Pagar · Logcomex</div>
+    <h1>Modernização do Processo de<br><span>Cartões de Viagem Internacional</span></h1>
+    <div class="sub">Elaborado por <strong>Kamilla</strong> &nbsp;·&nbsp; Para: <strong>Adriano</strong> &nbsp;·&nbsp; Mai 2026</div>
+  </div>
+
+  <!-- DORES -->
+  <div class="stitle">📌 Dores do processo atual — Banco Rendimento</div>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pi">🔐</div>
+      <div class="pl">Acesso individual</div>
+      <p>Thaiane loga em cada portal separadamente — erros de senha frequentes travam o processo.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pi">⌨️</div>
+      <div class="pl">Lançamento 1 a 1 no Omie</div>
+      <p>Cada transação de cada viajante é lançada manualmente no Omie — ~15 colaboradores ativos.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pi">📋</div>
+      <div class="pl">Controle em planilha</div>
+      <p>Senhas, saldos e cartões controlados em Google Sheets sem nenhuma automação.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pi">🧾</div>
+      <div class="pl">Prestação de contas inexistente</div>
+      <p>Na prática, os colaboradores não realizam a prestação de contas — comprovantes não são enviados e os gastos ficam sem registro.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pi">🏦</div>
+      <div class="pl">Emissão burocrática</div>
+      <p>Cartão nominal emitido um a um, com recarga mínima de USD 100 por viajante novo.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pi">📵</div>
+      <div class="pl">Sem visibilidade central</div>
+      <p>Nenhum painel centralizado. Ver o saldo de um colaborador exige acesso individual ao portal.</p>
+    </div>
+  </div>
+
+  <!-- COMPARATIVO -->
+  <div class="stitle">🔄 Como é vs. como vai ser</div>
+  <div class="comparison">
+    <div class="col-card current">
+      <div class="col-header">
+        <div class="col-dot"></div>
+        <div class="col-title">Hoje — Banco Rendimento</div>
+      </div>
+      <ul class="step-list">
+        <li><span class="step-num-badge">1</span><div><strong>Emissão do cartão</strong>Nominal, emitido um a um. Recarga mínima de USD 100 por viajante.</div></li>
+        <li><span class="step-num-badge">2</span><div><strong>Repasse ao colaborador</strong>Entrega física + e-mail manual com instruções e senha.</div></li>
+        <li><span class="step-num-badge">3</span><div><strong>Gasto na viagem</strong>Colaborador guarda comprovantes físicos durante toda a viagem.</div></li>
+        <li><span class="step-num-badge">4</span><div><strong>Acompanhamento de saldo</strong>Thaiane acessa cada portal individualmente. App com erros de senha frequentes.</div></li>
+        <li><span class="step-num-badge">5</span><div><strong>Lançamento no Omie</strong>Manual, transação por transação, colaborador por colaborador.</div></li>
+        <li><span class="step-num-badge">6</span><div><strong>Prestação de contas</strong>Na prática não acontece — comprovantes não são enviados e os gastos ficam sem registro.</div></li>
+        <li><span class="step-num-badge">7</span><div><strong>Conciliação</strong>Conferência manual de recibo a recibo contra lançamentos do Omie.</div></li>
+      </ul>
+    </div>
+    <div class="col-card future">
+      <div class="col-header">
+        <div class="col-dot"></div>
+        <div class="col-title">Futuro — Onfly</div>
+      </div>
+      <ul class="step-list">
+        <li><span class="step-num-badge">1</span><div><strong>Cartão compartilhado em R$</strong>Um mesmo cartão para vários colaboradores. Transações em R$ — sem câmbio manual.</div></li>
+        <li><span class="step-num-badge">2</span><div><strong>Saldo liberado em tempo real</strong>AP libera saldo pelo painel central antes ou durante a viagem.</div></li>
+        <li><span class="step-num-badge">3</span><div><strong>Gasto + comprovante no celular</strong>Colaborador usa o cartão com aproximação e registra o comprovante pelo app na hora.</div></li>
+        <li><span class="step-num-badge">4</span><div><strong>Conta centralizadora Logcomex</strong>Conta BTG vinculada à Onfly administra todos os saldos e cartões em painel único.</div></li>
+        <li><span class="step-num-badge">5</span><div><strong>IA lê os comprovantes</strong>Prestação de contas automática — gera relatório de viagem com validade fiscal.</div></li>
+        <li><span class="step-num-badge">6</span><div><strong>Lançamento automático no Omie</strong>Despesas aprovadas entram como títulos quitados via API — sem digitação.</div></li>
+        <li><span class="step-num-badge">7</span><div><strong>Políticas personalizadas</strong>Limites e categorias configurados conforme a necessidade da Logcomex.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GANHOS -->
+  <div class="stitle">🚀 Principais ganhos operacionais</div>
+  <div class="gain-grid">
+    <div class="gain-card">
+      <div class="gain-icon">📱</div>
+      <div><h4>Prestação de contas pelo celular</h4>
+      <p>Colaborador registra gastos com foto ou aproximação durante a viagem. Fim do e-mail com recibo e da planilha pós-viagem.</p></div>
+    </div>
+    <div class="gain-card">
+      <div class="gain-icon">🤖</div>
+      <div><h4>IA na leitura de comprovantes</h4>
+      <p>IA processa os recibos automaticamente e gera relatório de viagem com validade fiscal — sem conferência manual.</p></div>
+    </div>
+    <div class="gain-card">
+      <div class="gain-icon">⚡</div>
+      <div><h4>Liberação de saldo em tempo real</h4>
+      <p>AP libera saldo para o colaborador na hora pelo painel. Fim da espera por recarga via corretora.</p></div>
+    </div>
+    <div class="gain-card">
+      <div class="gain-icon">🏦</div>
+      <div><h4>Conta centralizadora Logcomex</h4>
+      <p>Conta BTG vinculada à Onfly centraliza todos os cartões. Saldo não utilizado pode ser transferido de volta normalmente.</p></div>
+    </div>
+    <div class="gain-card">
+      <div class="gain-icon">⚙️</div>
+      <div><h4>Políticas personalizáveis</h4>
+      <p>Limites por colaborador e tipo de despesa configurados conforme política interna — com bloqueio automático de desvios.</p></div>
+    </div>
+    <div class="gain-card">
+      <div class="gain-icon">🔗</div>
+      <div><h4>Integração direta com Omie</h4>
+      <p>Despesas aprovadas entram automaticamente no Omie como títulos quitados via API — eliminando lançamento manual.</p></div>
+    </div>
+    <div class="gain-card">
+      <div class="gain-icon">💳</div>
+      <div><h4>Cartão virtual disponível</h4>
+      <p>Além do cartão físico, cartões virtuais gerados instantaneamente — ideal para compras online e despesas remotas sem emissão física.</p></div>
+    </div>
+  </div>
+
+  <!-- CUSTOS -->
+  <div class="stitle">💰 Investimento para implantação</div>
+  <div class="cost-box">
+    <div class="cost-header">
+      <div class="ci">💳</div>
+      <h3>Estrutura de custos — início da operação</h3>
+    </div>
+    <div class="cost-grid">
+      <div class="cost-item">
+        <div class="cv">R$ 12,99</div>
+        <div class="cl">por emissão de cartão<br>(mínimo 10 cartões)</div>
+      </div>
+      <div class="cost-item">
+        <div class="cv">R$ 129,90</div>
+        <div class="cl">custo total de emissão<br>para iniciar a operação (10 × R$ 12,99)</div>
+      </div>
+      <div class="cost-item">
+        <div class="cv">R$ 5.000</div>
+        <div class="cl">recarga inicial na conta BTG<br>(saldo recuperável via TED)</div>
+      </div>
+    </div>
+    <div class="cost-obs">
+      💡 <strong>Ponto importante:</strong> Um mesmo cartão pode ser compartilhado por vários colaboradores em viagens diferentes — não é necessário um cartão por pessoa. Os R$ 5.000 ficam na conta centralizadora BTG e podem ser transferidos de volta para a conta da Logcomex quando não estiverem em uso. Investimento efetivo de implantação: <strong>R$ 129,90</strong>.
+    </div>
+  </div>
+
+  <!-- IMPLANTAÇÃO -->
+  <div class="stitle">🗺️ Etapas para implementação</div>
+  <div class="impl-steps">
+
+    <div class="impl-row done">
+      <div class="impl-num">1</div>
+      <div class="impl-content">
+        <div class="badge done">✓ Concluído</div>
+        <h4>Reunião de alinhamento com a Onfly</h4>
+        <p>Realizada em 14/05. Funcionalidades, integração Omie e estrutura de cartões mapeados.</p>
+      </div>
+    </div>
+
+    <div class="impl-row done">
+      <div class="impl-num">2</div>
+      <div class="impl-content">
+        <div class="badge done">✓ Concluído</div>
+        <h4>Visita presencial Onfly + Logcomex</h4>
+        <p>Realizada em 21/05. Alinhamento dos pontos comerciais, demonstração detalhada do Azulzinho, definições sobre Projeto México, Operação VIP e Client Review.</p>
+      </div>
+    </div>
+
+    <div class="impl-row done">
+      <div class="impl-num">3</div>
+      <div class="impl-content">
+        <div class="badge done">✓ Concluído</div>
+        <h4>Recebimento do aditivo contratual</h4>
+        <p>Recebido em 21/05. Contempla atualização da razão social, renovação por prazo indeterminado, Plano Premium (R$ 850/mês) e ativação do Cartão Corporativo Azulzinho.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">4</div>
+      <div class="impl-content">
+        <div class="badge pending">⏳ Aguardando retorno Onfly</div>
+        <h4>Esclarecer composição do valor R$ 850/mês</h4>
+        <p>Confirmar com Maryah (Onfly) se o Plano Premium já inclui o uso do Azulzinho, ou se haverá cobrança mensal adicional além das taxas transacionais. E-mail enviado pelo Henrique em 22/05 aguardando retorno.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">5</div>
+      <div class="impl-content">
+        <div class="badge action">→ Ação necessária</div>
+        <h4>Assinatura do aditivo contratual</h4>
+        <p>Após esclarecimento da composição do valor. Assinatura digital via Clicksign.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">6</div>
+      <div class="impl-content">
+        <div class="badge action">→ Ação necessária</div>
+        <h4>Coleta da documentação para Onfly</h4>
+        <p>Nome completo dos sócios (conforme QSA da Receita), data de nascimento, CPF e contrato social atualizado.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">7</div>
+      <div class="impl-content">
+        <div class="badge action">→ Ação necessária</div>
+        <h4>Abertura de conta BTG dedicada ao Azulzinho</h4>
+        <p>Conta BTG existente <strong>não pode ser reutilizada</strong> — Onfly confirmou que precisa de conta nova dedicada. Documentos exigidos: responsável pela conta (pode ser mais de 1), representantes legais, contrato social, procuração (se houver) e quadro societário.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">8</div>
+      <div class="impl-content">
+        <div class="badge action">→ Ação necessária</div>
+        <h4>Emissão dos 10 cartões iniciais — R$ 129,90</h4>
+        <p>Emitir o mínimo exigido de 10 cartões (R$ 12,99 cada · frete grátis a partir de 10 cartões). Solicitação via e-mail para cartao.corp@onfly.com.br · entrega via Correios em 2 a 5 dias úteis.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">9</div>
+      <div class="impl-content">
+        <div class="badge action">→ Ação necessária</div>
+        <h4>Recarga inicial de R$ 5.000 na conta dedicada</h4>
+        <p>Depósito para operacionalizar os saldos. Valor pode ser transferido de volta quando não utilizado.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">10</div>
+      <div class="impl-content">
+        <div class="badge pending">⏳ Pendente</div>
+        <h4>Configuração de políticas, controles e centros de custo</h4>
+        <p>Configurar na Onfly: limites diários, dias e horários autorizados, categorias permitidas (com bloqueio das não autorizadas), e mapeamento de centros de custo conforme estrutura do Omie.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">11</div>
+      <div class="impl-content">
+        <div class="badge pending">⏳ Pendente</div>
+        <h4>Agendar reunião para integração com Omie</h4>
+        <p>Definir participantes da Logcomex e agendar com a Onfly. Documentação de API aberta já compartilhada para avaliação técnica.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">12</div>
+      <div class="impl-content">
+        <div class="badge pending">⏳ Pendente</div>
+        <h4>Conexão com cliente Onfly (benchmark)</h4>
+        <p>Onfly vai facilitar troca de experiência com cliente que já usa o Azulzinho em viagens internacionais.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">13</div>
+      <div class="impl-content">
+        <div class="badge pending">⏳ Pendente</div>
+        <h4>Definir periodicidade do Client Review</h4>
+        <p>Henrique propôs mensal · 1ª semana de cada mês. Aguardando confirmação Onfly.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">14</div>
+      <div class="impl-content">
+        <div class="badge pending">⏳ Pendente</div>
+        <h4>Piloto com 2–3 viajantes</h4>
+        <p>Testar fluxo completo (cartão → gasto → prestação de contas por IA → lançamento Omie) com viagens reais antes do rollout.</p>
+      </div>
+    </div>
+
+    <div class="impl-row">
+      <div class="impl-num">15</div>
+      <div class="impl-content">
+        <div class="badge pending">⏳ Pendente</div>
+        <h4>Comunicação aos loggers + encerramento do Rendimento</h4>
+        <p>Guia simples de uso do app Onfly. Após validação do piloto, encerrar uso dos cartões Banco Rendimento.</p>
+      </div>
+    </div>
+
+  </div>
+
+  
+  <!-- ATUALIZAÇÕES PÓS-REUNIÃO 21-22/05 -->
+  <div class="stitle">🆕 Atualizações pós-reunião 21–22/05/2026</div>
+
+  <div class="comparison" style="grid-template-columns: 1fr 1fr;">
+    <div class="col-card future" style="background:#F8F4FE;">
+      <div class="col-header">
+        <span class="dot future-dot"></span>
+        <h3 style="color:#5B2EE0;">Plano Premium · Plataforma Onfly</h3>
+      </div>
+      <div style="padding: 14px 18px;">
+        <p style="font-size:13px; color:#444;"><strong>R$ 850,00/mês</strong> · Até 300 usuários ativos · Excedente R$ 6,99/usuário · Pagamento todo dia 5</p>
+        <p style="font-size:12px; color:#666; margin-top:8px;">Hoje pagamos R$ 727,29/mês — diferença +R$ 122,71 mensais.</p>
+        <p style="font-size:12px; color:#C26;  margin-top:10px; padding:10px 12px; background:#FFF0F1; border-radius:8px; border-left:3px solid #DC3545;">
+        ⚠️ <strong>Dúvida em aberto com a Onfly:</strong> o valor de R$ 850/mês já inclui o uso do Azulzinho ou haverá cobrança mensal adicional? E-mail enviado ao @Maryah em 22/05 aguardando retorno antes da assinatura do aditivo.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-card future" style="background:#F8F4FE;">
+      <div class="col-header">
+        <span class="dot future-dot"></span>
+        <h3 style="color:#5B2EE0;">Conta BTG · validação Onfly</h3>
+      </div>
+      <div style="padding: 14px 18px;">
+        <p style="font-size:13px; color:#444;">Onfly validou internamente: <strong>não é possível usar a conta BTG existente</strong> da Logcomex — será necessária abertura de <strong>conta BTG dedicada</strong> ao Azulzinho.</p>
+        <p style="font-size:12px; color:#666; margin-top:8px;">Os R$ 5.000 da recarga inicial vão pra essa nova conta dedicada.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOCUMENTOS ANEXADOS -->
+  <div class="stitle">📎 Documentos anexados pela Onfly</div>
+  <div class="metrics" style="grid-template-columns: repeat(3, 1fr); gap:12px;">
+    <a href="aditivo-contrato.pdf" target="_blank" class="metric-card" style="text-decoration:none; color:inherit; display:block; cursor:pointer; transition:all .2s; border:1px solid #DDD4FA;">
+      <div style="font-size:32px; margin-bottom:8px;">📄</div>
+      <div class="val" style="font-size:14px; color:#5B2EE0;">Aditivo Contratual</div>
+      <div class="lbl">Termo aditivo · contempla Azulzinho · 7 páginas</div>
+    </a>
+    <a href="material-azulzinho.pdf" target="_blank" class="metric-card" style="text-decoration:none; color:inherit; display:block; cursor:pointer; transition:all .2s; border:1px solid #DDD4FA;">
+      <div style="font-size:32px; margin-bottom:8px;">💳</div>
+      <div class="val" style="font-size:14px; color:#5B2EE0;">Material Azulzinho</div>
+      <div class="lbl">Manual operacional do cartão · 16 páginas</div>
+    </a>
+    <a href="email-pos-reuniao.pdf" target="_blank" class="metric-card" style="text-decoration:none; color:inherit; display:block; cursor:pointer; transition:all .2s; border:1px solid #DDD4FA;">
+      <div style="font-size:32px; margin-bottom:8px;">✉️</div>
+      <div class="val" style="font-size:14px; color:#5B2EE0;">E-mail pós-reunião</div>
+      <div class="lbl">Resumo dos pontos discutidos · Maryah & Henrique</div>
+    </a>
+  </div>
+
+
+  
+  <!-- FUNCIONALIDADES DESTACADAS DO MATERIAL -->
+  <div class="stitle">🌟 Funcionalidades destacadas do Azulzinho</div>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pi">📱</div>
+      <div class="pl">Carteira Digital</div>
+      <div class="pd">Cadastro em Apple Pay e Google Pay — colaborador paga pelo celular sem precisar do cartão físico.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pi">⚙️</div>
+      <div class="pl">Controle de gastos avançado</div>
+      <div class="pd">Limite diário, dias e horários autorizados, bloqueio automático de categorias não permitidas.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pi">💎</div>
+      <div class="pl">Cartão virtual instantâneo</div>
+      <div class="pd">Emissão imediata para compras online ou despesas remotas — sem espera de cartão físico.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pi">🆘</div>
+      <div class="pl">Suporte 24/7</div>
+      <div class="pd">Atendimento por e-mail, chat na plataforma e WhatsApp em viagens emergenciais.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pi">📊</div>
+      <div class="pl">Extrato e histórico unificados</div>
+      <div class="pd">Audit trail completo: alterações de limite, mudanças de senha, ajustes de controle de uso.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pi">⚡</div>
+      <div class="pl">Adiantamento sem fricção</div>
+      <div class="pd">Aumento de limite ou emissão de cartão virtual conforme política — sem aguardar recarga via corretora.</div>
+    </div>
+  </div>
+
+  <!-- TAXAS / CUSTOS TRANSACIONAIS -->
+  <div class="stitle">💰 Taxas transacionais do Azulzinho</div>
+  <div class="comparison" style="grid-template-columns: 1fr 1fr;">
+    <div class="col-card current">
+      <div class="col-header">
+        <span class="dot current-dot"></span>
+        <h3>Transações nacionais</h3>
+      </div>
+      <ol class="step-list" style="padding:14px 18px; counter-reset:none;">
+        <li style="counter-increment:none;"><strong>PIX:</strong> 1,40% por transação · mínimo R$ 1,75 · máximo R$ 9,60</li>
+        <li><strong>TED:</strong> R$ 2,00 por transação</li>
+        <li><strong>Saque nacional:</strong> R$ 8,99 por saque</li>
+        <li><strong>Compras com cartão:</strong> sem taxa adicional · cobrado o valor da transação</li>
+      </ol>
+    </div>
+    <div class="col-card future" style="background:#F8F4FE;">
+      <div class="col-header">
+        <span class="dot future-dot"></span>
+        <h3 style="color:#5B2EE0;">Transações internacionais</h3>
+      </div>
+      <ol class="step-list" style="padding:14px 18px; counter-reset:none;">
+        <li style="counter-increment:none;"><strong>Compras internacionais:</strong> 2% sobre o valor da transação + IOF aplicável</li>
+        <li><strong>Saque internacional:</strong> R$ 14,99 por saque</li>
+        <li><strong>Bandeira Mastercard:</strong> aceita em qualquer estabelecimento no exterior</li>
+        <li><strong>Países bloqueados:</strong> Irã, Síria, Sudão, Ucrânia, Rússia, Coreia do Norte, Cuba, Venezuela</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- VISÃO DE EXPANSÃO FUTURA -->
+  <div class="stitle">🚀 Visão de expansão futura</div>
+  <div class="hl pu" style="border-left: 4px solid var(--purple); background: #F0ECFD; padding: 16px 20px; border-radius: 0 8px 8px 0;">
+    <h4 style="color: var(--purple); font-size: 14px; margin-bottom: 8px;">Caso o teste do Azulzinho para viagens internacionais seja positivo</h4>
+    <p style="font-size: 13px; line-height: 1.6; color: var(--text);">
+      Após validação do piloto e da operação em viagens internacionais, podemos avaliar a <strong>expansão da utilização do Azulzinho</strong> para outras frentes de cartão de crédito:
+    </p>
+    <ul style="font-size: 13px; line-height: 1.7; color: var(--text); margin-top: 10px; padding-left: 20px;">
+      <li><strong>Conta Simples:</strong> avaliar substituição ou complementação do uso atual</li>
+      <li><strong>Outros gastos com cartão de crédito corporativo</strong> da Logcomex</li>
+      <li><strong>Centralização da gestão de cartões e prestação de contas</strong> numa única plataforma com integração Omie nativa</li>
+    </ul>
+    <p style="font-size: 12px; color: var(--muted); margin-top: 10px; font-style: italic;">
+      Essa expansão multiplicaria o ganho operacional já mapeado no piloto inicial (15 viajantes internacionais) para o universo total de usuários de cartão corporativo da empresa.
+    </p>
+  </div>
+
+
+  <!-- MÉTRICAS -->
+  <div class="stitle">📈 Impacto estimado</div>
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="val">~15</div>
+      <div class="lbl">viajantes com lançamento hoje 100% manual</div>
+    </div>
+    <div class="metric-card">
+      <div class="val">R$129,90</div>
+      <div class="lbl">investimento efetivo para iniciar a operação (10 × R$ 12,99)</div>
+    </div>
+    <div class="metric-card">
+      <div class="val">100%</div>
+      <div class="lbl">dos lançamentos automatizados no Omie</div>
+    </div>
+    <div class="metric-card">
+      <div class="val">0</div>
+      <div class="lbl">logins individuais — painel único centralizado</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Elaborado por <strong>Kamilla</strong> &nbsp;·&nbsp; Contas a Pagar &nbsp;·&nbsp; Logcomex &nbsp;·&nbsp; Atualizado em 22/Mai/2026
+  </div>
+
+</div>
+</body>
+</html>
