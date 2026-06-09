@@ -700,8 +700,8 @@
       <div style="padding: 14px 18px;">
         <p style="font-size:13px; color:#444;"><strong>R$ 850,00/mês</strong> · Até 300 usuários ativos · Excedente R$ 6,99/usuário · Pagamento todo dia 5</p>
         <p style="font-size:12px; color:#666; margin-top:8px;">Hoje pagamos R$ 727,29/mês — diferença +R$ 122,71 mensais.</p>
-        <p style="font-size:12px; color:#C26;  margin-top:10px; padding:10px 12px; background:#FFF0F1; border-radius:8px; border-left:3px solid #DC3545;">
-        ⚠️ <strong>Dúvida em aberto com a Onfly:</strong> o valor de R$ 850/mês já inclui o uso do Azulzinho ou haverá cobrança mensal adicional? E-mail enviado ao @Maryah em 22/05 aguardando retorno antes da assinatura do aditivo.
+        <p style="font-size:12px; color:#0BAF6A; margin-top:10px; padding:10px 12px; background:#E8F9F2; border-radius:8px; border-left:3px solid #0BAF6A;">
+        ✅ <strong>Respondido pela Onfly (jun/2026):</strong> o valor de R$ 850/mês refere-se ao reajuste de plano por quantidade de colaboradores — o Azulzinho <strong>não gera cobrança mensal adicional</strong>. Os únicos custos extras são as taxas transacionais (2% internacional, PIX, TED, saques).
         </p>
       </div>
     </div>
@@ -843,8 +843,117 @@
     </div>
   </div>
 
+  <!-- SIMULAÇÃO FINANCEIRA -->
+  <div class="stitle">🧮 Simulação financeira · viagem México mar/2026</div>
+
+  <div style="background:#fff; border-radius:16px; border:1px solid var(--border); padding:28px 32px; margin-bottom:16px; box-shadow:0 2px 12px rgba(91,46,224,0.05);">
+    <p style="font-size:12px; color:var(--muted); margin-bottom:20px;">Base: viagem real do colaborador à Cidade do México (09–20/mar/2026) · 11 dias · 42 transações</p>
+
+    <!-- Dados da viagem -->
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px;">
+      <div style="background:var(--bg); border-radius:12px; padding:14px 16px; text-align:center;">
+        <div style="font-size:18px; font-weight:800; color:var(--purple);">USD 1.200</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:4px;">Recarga total</div>
+      </div>
+      <div style="background:var(--bg); border-radius:12px; padding:14px 16px; text-align:center;">
+        <div style="font-size:18px; font-weight:800; color:var(--purple);">R$ 5,38</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:4px;">Câmbio puro (taxa)</div>
+      </div>
+      <div style="background:var(--bg); border-radius:12px; padding:14px 16px; text-align:center;">
+        <div style="font-size:18px; font-weight:800; color:var(--purple);">USD 1.132,95</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:4px;">Gasto efetivo na viagem</div>
+      </div>
+      <div style="background:var(--bg); border-radius:12px; padding:14px 16px; text-align:center;">
+        <div style="font-size:18px; font-weight:800; color:var(--purple);">42</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:4px;">Transações no destino</div>
+      </div>
+    </div>
+
+    <!-- Tabela comparativa -->
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+        <thead>
+          <tr style="background:var(--bg);">
+            <th style="text-align:left; padding:10px 14px; color:var(--muted); font-weight:700; border-radius:8px 0 0 8px;">Item</th>
+            <th style="text-align:right; padding:10px 14px; color:var(--red); font-weight:700;">Rendimento (atual)</th>
+            <th style="text-align:right; padding:10px 14px; color:var(--purple); font-weight:700; border-radius:0 8px 8px 0;">Azulzinho (Onfly)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; color:var(--text-2);">Conversão (1.132,95 USD × R$ 5,38)</td>
+            <td style="text-align:right; padding:10px 14px; color:var(--text);">R$ 6.095,27</td>
+            <td style="text-align:right; padding:10px 14px; color:var(--text);">R$ 6.095,27</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; color:var(--text-2);">IOF 3,5% (confirmado pela Onfly — tributo federal)</td>
+            <td style="text-align:right; padding:10px 14px; color:var(--text);">R$ 213,33</td>
+            <td style="text-align:right; padding:10px 14px; color:var(--text);">R$ 213,33</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px 14px; color:var(--text-2);">Taxa Onfly 2% por transação internacional</td>
+            <td style="text-align:right; padding:10px 14px; color:var(--muted);">—</td>
+            <td style="text-align:right; padding:10px 14px; color:var(--red);">R$ 121,91</td>
+          </tr>
+          <tr style="background:var(--bg);">
+            <td style="padding:12px 14px; font-weight:700; color:var(--text); border-radius:8px 0 0 8px;">Custo total da viagem</td>
+            <td style="text-align:right; padding:12px 14px; font-weight:700; color:var(--red);">R$ 6.308,61</td>
+            <td style="text-align:right; padding:12px 14px; font-weight:700; color:var(--purple); border-radius:0 8px 8px 0;">R$ 6.430,51</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px; padding:12px 16px; background:#FFF8E6; border-radius:10px; border-left:3px solid #B97A00;">
+      <p style="font-size:12px; color:#7A5000; line-height:1.6;">
+        📌 <strong>Diferença pura de custo financeiro: +R$ 121,91 (+1,93%) por viagem.</strong> Esse delta vem exclusivamente da taxa de 2% da Onfly sobre as transações internacionais — aplicada sobre o gasto efetivo de USD 1.132,95.
+      </p>
+    </div>
+  </div>
+
+  <!-- POSIÇÃO DA ONFLY -->
+  <div class="stitle">💬 Posição da Onfly · resposta à negociação (jun/2026)</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+    <div style="background:#FFF0F1; border-radius:14px; padding:20px 22px; border:1px solid #FFCDD2;">
+      <div style="font-size:12px; font-weight:700; color:var(--red); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">❌ Sem flexibilidade</div>
+      <ul style="font-size:12px; color:var(--text-2); line-height:1.8; padding-left:16px;">
+        <li>Taxa de <strong>2% internacional</strong> — sem margem de negociação (custos bancários e da bandeira)</li>
+        <li><strong>IOF 3,5%</strong> — tributo federal, padrão para todos os cartões de crédito</li>
+        <li>Nenhum bônus ou cashback de migração foi oferecido</li>
+      </ul>
+    </div>
+    <div style="background:#E8F9F2; border-radius:14px; padding:20px 22px; border:1px solid #A7E9CF;">
+      <div style="font-size:12px; font-weight:700; color:var(--green); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">✅ Confirmado / Esclarecido</div>
+      <ul style="font-size:12px; color:var(--text-2); line-height:1.8; padding-left:16px;">
+        <li><strong>R$ 850/mês</strong> = reajuste de plano por nº de usuários — Azulzinho <strong>não tem cobrança mensal adicional</strong></li>
+        <li>IOF 3,5% confirmado — mesmo percentual do Rendimento</li>
+        <li>Onfly disponível para apoiar a construção do caso interno</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CUSTO OCULTO OPERACIONAL -->
+  <div class="stitle">⚙️ Argumento da Onfly · custo operacional oculto do modelo atual</div>
+  <div style="background:#fff; border-radius:14px; border:1px solid var(--border); padding:22px 26px; margin-bottom:16px; box-shadow:0 2px 8px rgba(91,46,224,0.04);">
+    <p style="font-size:12.5px; color:var(--muted); margin-bottom:16px; line-height:1.6;">A Onfly argumenta que o delta de <strong>+R$ 121,91</strong> por viagem precisa ser comparado ao custo operacional real do modelo atual, que hoje exige:</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px;">
+      <div style="background:var(--bg); border-radius:10px; padding:12px 14px; font-size:11.5px; color:var(--text-2); line-height:1.5;"><strong>📋 Solicitação</strong><br>Pedido e acompanhamento de recarga a cada viagem</div>
+      <div style="background:var(--bg); border-radius:10px; padding:12px 14px; font-size:11.5px; color:var(--text-2); line-height:1.5;"><strong>💰 Saldo residual</strong><br>Gestão do saldo que sobra (USD 67,05 neste caso)</div>
+      <div style="background:var(--bg); border-radius:10px; padding:12px 14px; font-size:11.5px; color:var(--text-2); line-height:1.5;"><strong>📊 Conciliação</strong><br>42 transações conciliadas manualmente no Omie</div>
+      <div style="background:var(--bg); border-radius:10px; padding:12px 14px; font-size:11.5px; color:var(--text-2); line-height:1.5;"><strong>🔐 Logins individuais</strong><br>Acesso a cada portal separado por viajante</div>
+      <div style="background:var(--bg); border-radius:10px; padding:12px 14px; font-size:11.5px; color:var(--text-2); line-height:1.5;"><strong>📷 Prestação de contas</strong><br>Coleta manual de recibos e lançamento no sistema</div>
+      <div style="background:var(--bg); border-radius:10px; padding:12px 14px; font-size:11.5px; color:var(--text-2); line-height:1.5;"><strong>📡 Visibilidade zero</strong><br>Sem controle em tempo real durante a viagem</div>
+    </div>
+    <div style="padding:12px 16px; background:var(--purple-pale); border-radius:10px; border-left:3px solid var(--purple);">
+      <p style="font-size:12px; color:var(--text-2); line-height:1.6;">
+        🎯 <strong>Nossa leitura:</strong> o custo financeiro direto do Azulzinho é <strong>+R$ 121,91/viagem</strong> a mais. O ganho operacional existe e é real, mas não é quantificável sem uma medição do tempo atual gasto por viagem. <strong>Proposta para o Adriano:</strong> autorizar o piloto com 2–3 viajantes para medir o tempo operacional real e fechar o caso completo.
+      </p>
+    </div>
+  </div>
+
   <div class="footer">
-    Elaborado por <strong>Kamilla</strong> &nbsp;·&nbsp; Contas a Pagar &nbsp;·&nbsp; Logcomex &nbsp;·&nbsp; Atualizado em 22/Mai/2026
+    Elaborado por <strong>Kamilla</strong> &nbsp;·&nbsp; Contas a Pagar &nbsp;·&nbsp; Logcomex &nbsp;·&nbsp; Atualizado em Jun/2026
   </div>
 
 </div>
